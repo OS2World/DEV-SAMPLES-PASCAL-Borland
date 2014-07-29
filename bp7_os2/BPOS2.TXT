@@ -1,0 +1,186 @@
+Wunderkind c't 11/93, S. 240
+----------
+
+Borland has for a while offered a C++ compiler for OS/2, but for Pascal,
+people still have to go on waiting.  With some alteration of the compiler,
+units, and the runtime library, you can create 16-bit OS/2 programs for the
+OS/2 text modes and even Presentation Manager. The German computer magazine
+c't has provided these patches for BP7.x.  After applying them, you will be
+able to compile your DOS programs for OS/2.
+
+The batch file INSTALL.BAT executes the patches to the files. Fuller details
+as to how to apply the patches can be found below.
+
+The files in the package are:
+
+BPOS2.DOC      This file
+INSTALL.BAT    Copies the original files and makes the patches
+PATCHBP.PAS    Patches the compilers
+COMPATIB.PAS   Unit which provides DOS interrupt compatibility
+CRT.PAS        OS/2 port of the CRT unit
+DOS.PAS        OS/2 port of the DOS unit
+MAKEPM.PAS     Sets the flags for PM programs
+HELLO2.PAS     Writes "Hello, world"
+HELLOPM.PAS    "Hello, world!" in a PM application
+HELLOPM.RC     Resource file for HELLOPM.PAS
+THREAD.PAS     Demonstration for Threads
+VIDEO.PAS      Direct video access unit
+
+There is an extra file "OS2-API.ZIP". This is not part of the original
+package, but is rather the result of an effort by S. E. Hugg to create BP7
+units for the OS/2 API calls. The original c't package does not contain
+units that implement the *full* OS/2 API. Although what they have provided
+is fully sufficient for converting your DOS programs to OS/2, if you wanted
+to write a program that made full use of the OS/2 API, you still needed to
+find a way of interfacing to the rest of the API that was not covered by
+the c't magazine's package. Mr. Hugg has implemented the API for character 
+mode OS/2 programs. He is currently working on implementing the
+Presentation Manager API. He has uploaded the file which forms the basis of
+OS2-API.ZIP to ftp-os2.cdrom.com, but I am including it here just for
+completeness. Note that Mr. Hugg has amended the DOS and CRT units contained
+in the OS2-API.ZIP package, because he discovered certain omissions and
+mistakes in the original package from c't magazine. This is one reason why
+Mr. Hugg's stuff is packaged separately in a ZIP archive. Personally, I have
+copied his stuff over the original ones from c't magazine, but you may want
+to check both versions for yourself to see which one you prefer.
+
+There is currently an active program on Compuserve to translate C/C++
+header files for the OS/2 API into Pascal units. When this project is
+completed, BP users will at last be able to delve fully into the 
+hitherto dark world (to BP users at least) of full OS/2 programming.
+
+
+******
+NOTES:
+******
+The original package from c't magazine was supplied with a lot of ASM files,
+but somebody from Borland has objected to these on copyright grounds. He has
+however indicated that 14 of the ASM files that formed part of the original
+BP7 RTL have been changed, and so can stay in this package. The 15th one
+(OS2.ASM) is, I assume, fine as well, since it does not form part of the
+original BP7 RTL.
+
+Everybody who has a legitimate copy of BP7 has all the necessary ASM files
+anyway. They are only needed for the purpose of recompiling the SYSTEM unit.
+
+If you want to recompile the SYSTEM unit supplied with this package, you
+need to copy all the ASM files from your BP7 RTL into a new directory, and
+_then_ copy the ASM files in this package into that directory. That way, the
+files that have been amended in this patch will not be overwritten by the
+old versions. There is a copy of MAKEFILE included with this package for the
+purpose of compiling the ASM sources into object files. You need to run MAKE
+for this purpose, but before doing that, you need to edit MAKEFILE so that
+all the directories referred to in it are correct.
+
+If you don't want to recompile the SYSTEM unit, then you can ignore all the
+points mentioned above.
+
+
+INSTALLATION PROCEDURE
+----------------------
+
+When I installed the patches, I did not have a lot of guidance, and
+I was using the German language patch. I sorted things out by trial
+and error. I have reduced all I did into a number of steps. They may
+seem many, but they are actually quite straightforward.
+
+In order to apply the patch, take the following steps;
+
+1. Make sure that BPC.EXE is in your PATH statement so that it
+   can be called by the patch routines;
+
+2. Create a directory for your patches files, from where you will
+   be running the OS/2 patches. It is important to make this decision
+   before you start anything, as it will make things go a lot
+   easier. I will refer to this directory from now on as your
+   BP-OS2 directory
+
+3. Change to your BP-OS2 directory, and UNZIP the file BP7-OS2.ZIP
+   into this directory.
+
+4. The batch file INSTALL.BAT assumes that your BP7.0 binaries are
+   in a directory called \BP\BIN on the current drive. If they are
+   not, you need to edit this file to change all the references to
+   \BP\BIN to point to the correct directory paths.
+
+5. If you are using BP7.0,  type "INSTALL"
+   If you are using BP7.01, type "INSTALL 701"
+
+   This will run the batch file that will copy the files;
+       BP.EXE
+       BPC.EXE
+   into the current directory.
+
+   They will be called
+      BPOS2.EXE
+      BPCOS2.EXE respectively
+
+  Then it will compile PATCHBP.EXE, and apply it to the EXE files that
+  have been copied.
+
+  What the patch does is;
+         a. To add a new command line parameter "-CO" to your new
+            BPCOS2.EXE, to compile for an OS/2 platform. You can
+            still use the patched executable to compile for a DOS
+            platform by using the "-CD" parameter, and for DPMI, by
+            using the "-CP" parameter.
+
+        b.  The unit files produced when you compile a unit for OS/2
+            will have the extension "TPO".
+
+       c. In the new BPOS2 IDE, there will be a new target platform
+          (OS/2). This replaces "Windows" in the IDE.
+
+       d. The default TPL file for OS/2 compilation is now
+          OS2.TPL
+
+  That's about it really.
+
+  After the patches have been applied, the new units are added to the
+  OS2.TPL file. Then the object files (with .OBJ and .OBW extensions)
+  are moved into a sub-directory called "LIB" in the current directory.
+
+  You are now ready to rumble!!!
+
+    The patches (BPOS2.EXE and BPCOS2.EXE) can actually be copied
+    into your BP7 directory. They will read the same .CFG, .TP, and
+    .DLL files as the unpatched versions. There will be no clash here,
+    because the units they produce and use have an extension .TPO
+    However, if you have installed your sources for BP7, you have
+    to be careful not to overwrite them with the OS/2 versions of
+    SYSTEM.PAS, DOS.PAS and CRT.PAS. Thus it may be better to keep
+    the patched EXEs in a separate directory.
+
+    The only things being duplicated in the whole system are the two
+    patched executables. All the other binaries are shared with the
+    unpatched versions.
+
+THE EXAMPLE PROGRAMS
+--------------------
+
+1. HELLO2.PAS - this is a text-mode "hello" program. All you need is
+   to compile this, and run it.
+
+2. HELLOPM.PAS - this is a Presentation Manager "hello" program -
+   complete with menus, dialog boxes, etc.
+
+  In order to compile and run the HELLOPM program and any other PM
+  program, you need to take the following steps;
+
+      a. Compile MAKEPM.PAS as either a DOS or OS/2 program
+
+      b. Compile your PM program
+
+      c. Run MAKEPM on your PM program
+           e.g. "MAKEPM PMPROG.EXE"
+
+      d. Run the OS/2 RC.EXE on your PM program and its resource file.
+         RC.EXE comes with the OS/2 operating system.
+
+           e.g. "RC HELLOPM.RC HELLOPM.EXE"
+
+        NOTE: You may have to run RC from an OS/2 command prompt.
+              Running it from a DOS prompt produces an error message.
+
+      e. Run your OS/2 PM program!
+

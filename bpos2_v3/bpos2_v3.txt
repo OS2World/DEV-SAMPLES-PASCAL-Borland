@@ -1,0 +1,40 @@
+These are fixes for Borland Pascal 7 patched for OS/2, unit CRT.PAS,
+which allow for proper running in OS/2 windows with different sizes
+then 80x25 characters. 
+
+1. Append var section of unit CRT.PAS with:
+var 
+ ....
+ VioActMode:VioModeInfo;
+ usRow,usColumn,usBufLen:USHORT;
+ CellStr:array[0..1] of byte;
+
+2. Change initialization section of unit CRT.PAS to:
+Begin
+  {Try to get color attributes of current screen cell}
+  VioGetCurPos(@usRow,@usColumn,0);
+  usBufLen:=2;
+  VioReadCellStr(@CellStr,@usBufLen,usRow,usColumn,0);
+  {Set attributes to actual rather then
+  TextAttr:= LightGray;}
+  TextAttr:=ord(CellStr[1])+ord(CellStr[0])*256;
+  {Get current screen window dimensions}
+  VioActMode.cb:=$000E;{sizeof(VIOMODEINFO)}
+  VioGetMode(@VioActMode,0);
+  {Set Max to actual size rather then
+  WindMax := 79+24*256;}
+  WindMax := VioActMode.col-1+(VioActMode.row-1)*256;
+  WindMin := 0;
+  AssignCrt(Input);
+  Reset(Input);
+  AssignCrt(Output);
+  Rewrite(Output);
+End.
+
+Fixes were prepared by Stanislaw Kozlowski on 12 July 95.
+ Address:
+ Poland, 01-673 Warsaw, ul.Podlesna 61, IMGW.
+
+ e-mail: ml@igf.edu.pl
+
+

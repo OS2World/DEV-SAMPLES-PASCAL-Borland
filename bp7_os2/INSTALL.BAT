@@ -1,0 +1,35 @@
+@echo off
+rem Batch file to install the OS/2 patch for Borland Pascal 7.0x
+rem This file assumes that your BP7 files are in \BP\BIN on the
+rem current drive.
+BPC PATCHBP
+IF NOT EXIST PATCHBP.EXE GOTO ABORT
+COPY \BP\BIN\BPC.EXE BPCOS2.EXE
+COPY \BP\BIN\BP.EXE  BPOS2.EXE
+COPY \BP\BIN\BP.TP
+COPY \BP\BIN\TPW.TPL
+COPY \BP\BIN\TURBO.TPL
+PATCHBP BPCOS2.EXE C %1
+PATCHBP BPOS2.EXE  I %1
+IF NOT EXIST \BP\BIN\BP.RES GOTO DONE
+COPY \BP\BIN\BP.RES  BP.RES
+PATCHBP BP.RES   R %1
+GOTO DONE
+:ABORT
+ECHO YOU MUST COMPILE PATCHBP.PAS BEFORE EXECUTING PATCH.BAT
+:DONE
+ECHO Compiling the run-time library
+rem BPCOS2 -CO SYSTEM /$G+ > NUL
+BPCOS2 -CO DOS /$G+ > NUL
+BPCOS2 -CO CRT /$G+ > NUL
+BPCOS2 -CO COMPATIB /$G+ > NUL
+echo Building a new OS2.TPL
+TPUMOVER OS2.TPL +SYSTEM.TPO > NUL
+TPUMOVER OS2.TPL +DOS.TPO > NUL
+TPUMOVER OS2.TPL +CRT.TPO > NUL
+TPUMOVER OS2.TPL +COMPATIB.TPO > NUL
+rem ECHO Moving the OBJECT files to the directory "LIB"
+rem MD LIB
+rem COPY *.OB* LIB > NUL
+rem DEL *.OB* > NUL
+rem ECHO Installation of the patch is complete.

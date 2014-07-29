@@ -1,0 +1,64 @@
+        BORLAND PASCAL 7.0 OS/2 PATCH: UPDATE AND BUG FIXES
+        ---------------------------------------------------
+
+The German c't magazine's patch for Borland Pascal 7.0 (which allows
+it to compile 16-bit OS/2 binaries) is now well known. The patch is
+available by anonymous FTP from ftp-os2.cdrom.com (bp7-os2.zip).
+
+There has been an active forum on Compuserve, which has been working
+on translating the OS/2 16-bit API to Pascal, for use with the patch,
+and also on fixing bugs contained in the original package. You can
+contact the Compuserve forum through various e-mail addresses
+contained in the documentaion to the various ZIP files in this
+package.
+
+This package contains the latest result of the efforts of these
+people. The package contains the following files:
+
+BPOS2-V2.DOC   - this file!
+API-UNIT.ZIP   - the full 16-bit OS/2 API in several Pascal units
+API-HELP.ZIP   - on-line help (in BP7 TPH format) for the API calls
+OS2.ASM        - updated OS2.ASM file
+RTL-FIX1.ZIP   - the first bug-fix package
+RTL-FIX2.ZIP   - the second bug-fix package
+
+Installation
+------------
+All the ZIP files in this package are unmodified copies of the
+Compuserve people's efforts. I have only packaged them into one
+ZIP file for onward transmission. Each ZIP file contains its
+original documentation. You need to read this documentation
+for instructions on installation, etc.
+
+The bug fixes are incremental - this means that you need to install
+the first one before installing the second one. This will be in the
+form of manual editing of certain files (e.g. DOS.PAS) and the
+replacement of certain ASM files with the ones in the bug-fixes.
+
+OS2.ASM
+-------
+The only addition from me is the OS2.ASM file. One of the bug fixes
+uses a constant which is not defined in OS2.ASM. All I have done is
+to define it, for my own use. This involved adding a single line to
+the original OS2.ASM file, as seen below;
+
+OPEN_ACCESS_WRITEONLY EQU    1
+
+This is the only change in OS2.ASM. I include the file for completeness.
+You can delete it if you want. It works well for me, but I cannot
+guarantee anything. Please don't call me if something goes awry.
+
+
+
+Disclaimer
+----------
+I am not the author of anything in this package. I am just trying to
+do a service by transmitting the files, since not everybody has an
+account on Compuserve. If you have any problems with anything in this
+package, please do NOT write to me. There is nothing I can do about
+anything in it. Problems should be directed to the folks on
+Compuserve, who I believe, will be glad to hear of any.
+
+
+
+

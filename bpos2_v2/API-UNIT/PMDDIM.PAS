@@ -1,0 +1,474 @@
+{| Unit: pmddim
+ | Version: 1.00
+ | translated from file pmddim.H
+ | Original translation: Peter Sawatzki (ps)
+ | Contributing:
+ |   (fill in)
+ |
+ | change history:
+ | Date:    Ver: Author:
+ | 11/13/93 1.00 ps     original translation by ps
+}
+Unit pmddim;
+Interface
+Uses
+  Os2Def;
+
+  Function GreEntry2:  ULONG;
+  Function GreEntry3:  ULONG;
+  Function GreEntry4:  ULONG;
+  Function GreEntry5:  ULONG;
+  Function GreEntry6:  ULONG;
+  Function GreEntry7:  ULONG;
+  Function GreEntry8:  ULONG;
+  Function GreEntry9:  ULONG;
+  Function GreEntry10: ULONG;
+
+Const
+  NGreGetArcParameters             =  $00004000 ;
+  NGreSetArcParameters             =  $00004001 ;
+  NGreArc                          =  $00004002 ;
+  NGrePartialArc                   =  $00004003 ;
+  NGreFullArcInterior              =  $00004004 ;
+  NGreFullArcBoundary              =  $00004005 ;
+  NGreFullArcBoth                  =  $00004006 ;
+  NGreBoxInterior                  =  $00004007 ;
+  NGreBoxBoundary                  =  $00004008 ;
+  NGreBoxBoth                      =  $00004009 ;
+  NGrePolyFillet                   =  $0000400A ;
+  NGrePolyFilletSharp              =  $0000400B ;
+  NGrePolySpline                   =  $0000400C ;
+  NGreDrawConicsInPath             =  $0000400D ;
+  NGreCookWholePath                =  $0000400E ;
+  NGreCookPathCurves               =  $0000400F ;
+  NGreRenderPath                   =  $00004011 ;
+  NGreDisjointLines                =  $00004016 ;
+  NGreGetCurrentPosition           =  $00004017 ;
+  NGreSetCurrentPosition           =  $00004018 ;
+  NGrePolyLine                     =  $00004019 ;
+  NGreDrawLinesInPath              =  $0000401A ;
+  NGrePolyShortLine                =  $0000401B ;
+  NGrePolyScanline                 =  $0000401C ;
+  NGreDeviceCreateBitmap           =  $00004023 ;
+  NGreDeviceDeleteBitmap           =  $00004024 ;
+  NGreDeviceSelectBitmap           =  $00004025 ;
+  NGreBitblt                       =  $00004026 ;
+  NGreGetPel                       =  $00004027 ;
+  NGreSetPel                       =  $00004028 ;
+  NGreImageData                    =  $00004029 ;
+  NGreSaveScreenBits               =  $0000402C ;
+  NGreRestoreScreenBits            =  $0000402D ;
+  NGreDrawBorder                   =  $0000402E ;
+  NGreDeviceSetCursor              =  $0000402F ;
+  NGreGetBitmapBits                =  $00004030 ;
+  NGreSetBitmapBits                =  $00004031 ;
+  NGreSetColorCursor               =  $00004032 ;
+  NGreCharString                   =  $00004035 ;
+  NGreCharStringPos                =  $00004036 ;
+  NGreQueryTextBox                 =  $00004037 ;
+  NGreQueryCharPositions           =  $00004038 ;
+  NGreQueryWidthTable              =  $00004039 ;
+  NGrePolyMarker                   =  $0000403A ;
+  NGreCharRect                     =  $0000403B ;
+  NGreCharStr                      =  $0000403C ;
+  NGreScrollRect                   =  $0000403D ;
+  NGreUpdateCursor                 =  $0000403E ;
+  NGreBeginArea                    =  $00004046 ;
+  NGreEndArea                      =  $00004047 ;
+  NGreBeginPath                    =  $00004048 ;
+  NGreEndPath                      =  $00004049 ;
+  NGreCloseFigure                  =  $0000404A ;
+  NGreFillPath                     =  $0000404B ;
+  NGreOutlinePath                  =  $0000404C ;
+  NGreModifyPath                   =  $0000404D ;
+  NGreStrokePath                   =  $0000404E ;
+  NGreSelectClipPath               =  $0000404F ;
+  NGreSavePath                     =  $00004050 ;
+  NGreRestorePath                  =  $00004051 ;
+  NGreClip1DPath                   =  $00004052 ;
+  NGreDrawRawPath                  =  $00004053 ;
+  NGreDrawCookedPath               =  $00004054 ;
+  NGreAreaSetAttributes            =  $00004055 ;
+  NGreGetRegionBox                 =  $0000405D ;
+  NGreGetRegionRects               =  $0000405E ;
+  NGreOffsetRegion                 =  $0000405F ;
+  NGrePtInRegion                   =  $00004060 ;
+  NGreRectInRegion                 =  $00004061 ;
+  NGreCreateRectRegion             =  $00004062 ;
+  NGreDestroyRegion                =  $00004063 ;
+  NGreSetRectRegion                =  $00004064 ;
+  NGreCombineRegion                =  $00004065 ;
+  NGreCombineRectRegion            =  $00004066 ;
+  NGreCombineShortLineRegion       =  $00004067 ;
+  NGreEqualRegion                  =  $00004068 ;
+  NGrePaintRegion                  =  $00004069 ;
+  NGreSetRegionOwner               =  $0000406A ;
+  NGreGetClipBox                   =  $0000406E ;
+  NGreGetClipRects                 =  $0000406F ;
+  NGreOffsetClipRegion             =  $00004070 ;
+  NGrePtVisible                    =  $00004071 ;
+  NGreRectVisible                  =  $00004072 ;
+  NGreQueryClipRegion              =  $00004073 ;
+  NGreSelectClipRegion             =  $00004074 ;
+  NGreIntersectClipRectangle       =  $00004075 ;
+  NGreExcludeClipRectangle         =  $00004076 ;
+  NGreSetXformRect                 =  $00004077 ;
+  NGreSaveRegion                   =  $0000407B ;
+  NGreRestoreRegion                =  $0000407C ;
+  NGreClipPathCurves               =  $0000407D ;
+  NGreSelectPathRegion             =  $0000407E ;
+  NGreRegionSelectBitmap           =  $0000407F ;
+  NGreCopyClipRegion               =  $00004080 ;
+  NGreSetupDC                      =  $00004081 ;
+  NGreGetPageUnits                 =  $00004083 ;
+  NGreSetPageUnits                 =  $00004084 ;
+  NGreGetModelXform                =  $00004085 ;
+  NGreSetModelXform                =  $00004086 ;
+  NGreGetWindowViewportXform       =  $00004087 ;
+  NGreSetWindowViewportXform       =  $00004088 ;
+  NGreGetGlobalViewingXform        =  $00004089 ;
+  NGreSetGlobalViewingXform        =  $0000408A ;
+  NGreSaveXformData                =  $0000408B ;
+  NGreRestoreXformData             =  $0000408C ;
+  NGreGetPageViewport              =  $0000408D ;
+  NGreSetPageViewport              =  $0000408E ;
+  NGreGetGraphicsField             =  $00004091 ;
+  NGreSetGraphicsField             =  $00004092 ;
+  NGreGetViewingLimits             =  $00004093 ;
+  NGreSetViewingLimits             =  $00004094 ;
+  NGreQueryViewportSize            =  $00004095 ;
+  NGreConvert                      =  $00004096 ;
+  NGreConvertPath                  =  $00004097 ;
+  NGreSaveXform                    =  $00004098 ;
+  NGreRestoreXform                 =  $00004099 ;
+  NGreMultiplyXforms               =  $0000409A ;
+  NGreConvertWithMatrix            =  $0000409B ;
+  NGreDeviceGetAttributes          =  $0000409D ;
+  NGreDeviceSetAVIOFont2           =  $0000409E ;
+  NGreGetPairKerningTable          =  $000040A0 ;
+  NGreDeviceSetAVIOFont            =  $000040A1 ;
+  NGreDeviceSetAttributes          =  $000040A2 ;
+  NGreDeviceSetGlobalAttribute     =  $000040A3 ;
+  NGreNotifyClipChange             =  $000040A4 ;
+  NGreNotifyTransformChange        =  $000040A5 ;
+  NGreRealizeFont                  =  $000040A6 ;
+  NGreErasePS                      =  $000040A7 ;
+  NGreSetStyleRatio                =  $000040A8 ;
+  NGreDeviceQueryFontAttributes    =  $000040A9 ;
+  NGreDeviceQueryFonts             =  $000040AA ;
+  NGreDeviceInvalidateVisRegion    =  $000040AB ;
+  NGreGetPickWindow                =  $000040AC ;
+  NGreSetPickWindow                =  $000040AD ;
+  NGreResetBounds                  =  $000040AE ;
+  NGreGetBoundsData                =  $000040AF ;
+  NGreAccumulateBounds             =  $000040B0 ;
+  NGreGetCodePage                  =  $000040B3 ;
+  NGreSetCodePage                  =  $000040B4 ;
+  NGreLockDevice                   =  $000040B5 ;
+  NGreUnlockDevice                 =  $000040B6 ;
+  NGreDeath                        =  $000040B7 ;
+  NGreResurrection                 =  $000040B8 ;
+  NGreGetDCOrigin                  =  $000040BA ;
+  NGreDeviceSetDCOrigin            =  $000040BB ;
+  NGreGetLineOrigin                =  $000040BC ;
+  NGreSetLineOrigin                =  $000040BD ;
+  NGreGetStyleRatio                =  $000040BE ;
+  NGreQueryColorData               =  $000040C3 ;
+  NGreQueryLogColorTable           =  $000040C4 ;
+  NGreCreateLogColorTable          =  $000040C5 ;
+  NGreRealizeColorTable            =  $000040C6 ;
+  NGreUnrealizeColorTable          =  $000040C7 ;
+  NGreQueryRealColors              =  $000040C8 ;
+  NGreQueryNearestColor            =  $000040C9 ;
+  NGreQueryColorIndex              =  $000040CA ;
+  NGreQueryRGBColor                =  $000040CB ;
+  NGreQueryDeviceBitmaps           =  $000040D0 ;
+  NGreQueryDeviceCaps              =  $000040D1 ;
+  NGreEscape                       =  $000040D2 ;
+  NGreQueryHardcopyCaps            =  $000040D3 ;
+  NGreQueryDevResource             =  $000040D4 ;
+  NGreOpenDC                       =  $00000200 ;
+  NGreCloseDC                      =  $00004201 ;
+  NGreResetDC                      =  $00004202 ;
+  NGreGetHandle                    =  $00004203 ;
+  NGreSetHandle                    =  $00004204 ;
+  NGreGetProcessControl            =  $00004205 ;
+  NGreSetProcessControl            =  $00004206 ;
+  NGreSaveDC                       =  $00004207 ;
+  NGreRestoreDC                    =  $00004208 ;
+  NGreQueryDeviceNames             =  $00000209 ;
+  NGreQueryEngineVersion           =  $0000020A ;
+  NGreSetDCOwner                   =  $0000420B ;
+  NGreInvalidateVisRegion          =  $0000420F ;
+  NGreCreateBitmap                 =  $00004210 ;
+  NGreDeleteBitmap                 =  $00000211 ;
+  NGreSelectBitmap                 =  $00004212 ;
+  NGreGetBitmapParameters          =  $00000213 ;
+  NGreGetBitmapDimension           =  $00000214 ;
+  NGreSetBitmapDimension           =  $00000215 ;
+  NGreSetCursor                    =  $00004216 ;
+  NGreGetAttributes                =  $00004217 ;
+  NGreSetAttributes                =  $00004218 ;
+  NGreSetGlobalAttribute           =  $00004219 ;
+  NGreSetBitmapOwner               =  $0000021A ;
+  NGreGetDefaultAttributes         =  $0000421B ;
+  NGreSetDefaultAttributes         =  $0000421C ;
+  NGreGetDefaultArcParameters      =  $0000421D ;
+  NGreSetDefaultArcParameters      =  $0000421E ;
+  NGreGetDefaultViewingLimits      =  $0000421F ;
+  NGreSetDefaultViewingLimits      =  $00004220 ;
+  NGreInitializeAttributes         =  $00004221 ;
+  NGreDeleteSetId                  =  $00004222 ;
+  NGreQueryNumberSetIds            =  $00004223 ;
+  NGreQuerySetIds                  =  $00004224 ;
+  NGreQueryBitmapHandle            =  $00004225 ;
+  NGreSetBitmapID                  =  $00004226 ;
+  NGreCopyDCLoadData               =  $00004227 ;
+  NGreQueryLogicalFont             =  $0000422C ;
+  NGreCreateLogicalFont            =  $0000422D ;
+  NGreLoadFont                     =  $0000022E ;
+  NGreUnloadFont                   =  $0000022F ;
+  NGreQueryFonts                   =  $00004230 ;
+  NGreQueryFontAttributes          =  $00004231 ;
+  NGreInstallIFI                   =  $00000232 ;
+  NGreLoadPublicFont               =  $00000233 ;
+  NGreUnLoadPublicFont             =  $00000234 ;
+  NGreQueryCodePageVector          =  $00000235 ;
+  NGreQueryFontFileDescriptions    =  $00000236 ;
+  NGreAccumulateJournalFile        =  $00000239 ;
+  NGreCreateJournalFile            =  $0000023A ;
+  NGreDeleteJournalFile            =  $0000023B ;
+  NGreStartJournalFile             =  $0000023C ;
+  NGreStopJournalFile              =  $0000023D ;
+  NGrePlayJournalFile              =  $0000023E ;
+  NGreOpenJournalFile              =  $0000023F ;
+
+Function GreGetArcParameters(a,b)     (BOOL) GreEntry4((HDC)(a),(PARCPARAMS)(b),0L,0x00004000L)
+Function GreSetArcParameters(a,b)     (BOOL) GreEntry4((HDC)(a),(PARCPARAMS)(b),0L,0x00004001L)
+Function GreArc(a,b)                  (int) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004002L)
+Function GrePartialArc(a,b,c,d,e)     (int) GreEntry7((HDC)(a),(PPOINTL)(b),(FIXED)(c),(FIXED)(d),(FIXED)(e),0L,0x00004003L)
+Function GreFullArcInterior(a,b)      (int) GreEntry4((HDC)(a),(FIXED)(b),0L,0x00004004L)
+Function GreFullArcBoundary(a,b)      (int) GreEntry4((HDC)(a),(FIXED)(b),0L,0x00004005L)
+Function GreFullArcBoth(a,b)          (int) GreEntry4((HDC)(a),(FIXED)(b),0L,0x00004006L)
+Function GreBoxInterior(a,b)          (int) GreEntry4((HDC)(a),(PBOXPARAMS)(b),0L,0x00004007L)
+Function GreBoxBoundary(a,b)          (int) GreEntry4((HDC)(a),(PBOXPARAMS)(b),0L,0x00004008L)
+Function GreBoxBoth(a,b)              (int) GreEntry4((HDC)(a),(PBOXPARAMS)(b),0L,0x00004009L)
+Function GrePolyFillet(a,b,c)         (int) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x0000400AL)
+Function GrePolyFilletSharp(a,b,c,d)  (int) GreEntry6((HDC)(a),(PPOINTL)(b),(LONG)(c),(PFIXED)(d),0L,0x0000400BL)
+Function GrePolySpline(a,b,c)         (int) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x0000400CL)
+Function GreDrawConicsInPath(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(PPATH)(b),(PCURVE)(c),(LONG)(d),0L,0x0000400DL)
+Function GreCookWholePath(a,b)        (BOOL) GreEntry4((HDC)(a),(PPATH)(b),0L,0x0000400EL)
+Function GreCookPathCurves(a,b,c)     (BOOL) GreEntry5((HDC)(a),(PPATH)(b),(PPIPELINEINFO)(c),0L,0x0000400FL)
+Function GreRenderPath(a,b,c,d,e,f,g,h) (BOOL) GreEntry10((HDC)(a),(PPATH)(b),(PCURVE)(c),(LONG)(d),(LONG)(e),(LONG)(f),(PSHORTLINE)(g),(LONG)(h),0L,0x00004011L)
+Function GreDisjointLines(a,b,c)      (int) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x00004016L)
+Function GreGetCurrentPosition(a,b)   (BOOL) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004017L)
+Function GreSetCurrentPosition(a,b)   (BOOL) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004018L)
+Function GrePolyLine(a,b,c)           (int) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x00004019L)
+Function GreDrawLinesInPath(a,b,c,d)  (BOOL) GreEntry6((HDC)(a),(PPATH)(b),(PCURVE)(c),(LONG)(d),0L,0x0000401AL)
+Function GrePolyShortLine(a,b)        (int) GreEntry4((HDC)(a),(PSHORTLINE)(b),0L,0x0000401BL)
+Function GrePolyScanline(a,b)         (ULONG) GreEntry4((HDC)(a),(PSCANDATA)(b),0L,0x0000401CL)
+Function GreDeviceCreateBitmap(a,b,c,d,e) (HBITMAP) GreEntry7((HDC)(a),(PBITMAPINFOHEADER)(b),(ULONG)(c),(PBYTE)(d),(PBITMAPINFO)(e),0L,0x00004023L)
+Function GreDeviceDeleteBitmap(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(HBITMAP)(b),(PDELETERETURN)(c),(ULONG)(d),0L,0x00004024L)
+Function GreDeviceSelectBitmap(a,b)   (ULONG) GreEntry4((HDC)(a),(HBITMAP)(b),0L,0x00004025L)
+Function GreBitblt(a,b,c,d,e,f,g)     (int) GreEntry9((HDC)(a),(HDC)(b),(LONG)(c),(PBITBLTPARAMETERS)(d),(LONG)(e),(ULONG)(f),(PBITBLTATTRS)(g),0L,0x00004026L)
+Function GreGetPel(a,b)               (LONG) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004027L)
+Function GreSetPel(a,b)               (int) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004028L)
+Function GreImageData(a,b,c,d)        (int) GreEntry6((HDC)(a),(PBYTE)(b),(LONG)(c),(LONG)(d),0L,0x00004029L)
+Function GreSaveScreenBits(a,b)       (ULONG) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x0000402CL)
+Function GreRestoreScreenBits(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(LHANDLE)(b),(PRECTL)(c),(ULONG)(d),0L,0x0000402DL)
+Function GreDrawBorder(a,b,c,d,e,f,g) (BOOL) GreEntry9((HDC)(a),(PRECTL)(b),(LONG)(c),(LONG)(d),(COLOR)(e),(COLOR)(f),(ULONG)(g),0L,0x0000402EL)
+Function GreDeviceSetCursor(a,b,c)    (BOOL) GreEntry5((HDC)(a),(PPOINTL)(b),(HBITMAP)(c),0L,0x0000402FL)
+Function GreGetBitmapBits(a,b,c,d,e,f) (LONG) GreEntry8((HDC)(a),(HBITMAP)(b),(LONG)(c),(LONG)(d),(PBYTE)(e),(PBITMAPINFO)(f),0L,0x00004030L)
+Function GreSetBitmapBits(a,b,c,d,e,f) (LONG) GreEntry8((HDC)(a),(HBITMAP)(b),(LONG)(c),(LONG)(d),(PBYTE)(e),(PBITMAPINFO)(f),0L,0x00004031L)
+Function GreSetColorCursor(a,b)       (BOOL) GreEntry4((HDC)(a),(PPOINTERINFO)(b),0L,0x00004032L)
+Function GreCharString(a,b,c)         (int) GreEntry5((HDC)(a),(LONG)(b),(PCH)(c),0L,0x00004035L)
+Function GreCharStringPos(a,b,c,d,e,f,g,h) (int) GreEntry10((HDC)(a),(PPOINTL)(b),(PRECTL)(c),(ULONG)(d),(LONG)(e),(PCH)(f),(PLONG)(g),(PCSP_INFO)(h),0L,0x00004036L)
+Function GreQueryTextBox(a,b,c,d,e)   (BOOL) GreEntry7((HDC)(a),(LONG)(b),(PCH)(c),(LONG)(d),(PPOINTL)(e),0L,0x00004037L)
+Function GreQueryCharPositions(a,b,c,d,e,f,g) (ULONG) GreEntry9((HDC)(a),(PPOINTL)(b),(ULONG)(c),(LONG)(d),(PCH)(e),(PLONG)(f),(PPOINTL)(g),0L,0x00004038L)
+Function GreQueryWidthTable(a,b,c,d)  (BOOL) GreEntry6((HDC)(a),(LONG)(b),(LONG)(c),(PLONG)(d),0L,0x00004039L)
+Function GrePolyMarker(a,b,c)         (int) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x0000403AL)
+Function GreCharRect(a,b,c)           (ULONG) GreEntry5((HDC)(a),(VioPresentationSpace FAR *)(b),(LPGridRectRef)(c),0L,0x0000403BL)
+Function GreCharStr(a,b,c)            (ULONG) GreEntry5((HDC)(a),(VioPresentationSpace FAR *)(b),(LPGridStringRef)(c),0L,0x0000403CL)
+Function GreScrollRect(a,b,c)         (ULONG) GreEntry5((HDC)(a),(VioPresentationSpace FAR *)(b),(LPScrollRectRef)(c),0L,0x0000403DL)
+Function GreUpdateCursor(a,b)         (ULONG) GreEntry4((HDC)(a),(VioPresentationSpace FAR *)(b),0L,0x0000403EL)
+Function GreBeginArea(a,b)            (int) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004046L)
+Function GreEndArea(a,b)              (int) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004047L)
+Function GreBeginPath(a,b) (BOOL) GreEntry4((HDC)(a),(PHID)(b),0L,0x00004048L)
+Function GreEndPath(a,b) (BOOL) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004049L)
+Function GreCloseFigure(a) (BOOL) GreEntry3((HDC)(a),0L,0x0000404AL)
+Function GreFillPath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PHID)(b),(ULONG)(c),0L,0x0000404BL)
+Function GreOutlinePath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PHID)(b),(ULONG)(c),0L,0x0000404CL)
+Function GreModifyPath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PHID)(b),(ULONG)(c),0L,0x0000404DL)
+Function GreStrokePath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PHID)(b),(ULONG)(c),0L,0x0000404EL)
+Function GreSelectClipPath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PHID)(b),(ULONG)(c),0L,0x0000404FL)
+Function GreSavePath(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x00004050L)
+Function GreRestorePath(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x00004051L)
+Function GreClip1DPath(a,b,c) (BOOL) GreEntry5((HDC)(a),(PPATH)(b),(PPIPELINEINFO)(c),0L,0x00004052L)
+Function GreDrawRawPath(a,b) (BOOL) GreEntry4((HDC)(a),(PPATH)(b),0L,0x00004053L)
+Function GreDrawCookedPath(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(PPATH)(b),(PCURVE)(c),(LONG)(d),0L,0x00004054L)
+Function GreAreaSetAttributes(a,b,c,d,e) (BOOL) GreEntry7((HDC)(a),(ULONG)(b),(ULONG)(c),(ULONG)(d),(PBUNDLE)(e),0L,0x00004055L)
+Function GreGetRegionBox(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(PRECTL)(c),0L,0x0000405DL)
+Function GreGetRegionRects(a,b,c,d,e) (BOOL) GreEntry7((HDC)(a),(HRGN)(b),(PRECTL)(c),(PRGNRECT)(d),(PRECTL)(e),0L,0x0000405EL)
+Function GreOffsetRegion(a,b,c) (BOOL) GreEntry5((HDC)(a),(HRGN)(b),(PPOINTL)(c),0L,0x0000405FL)
+Function GrePtInRegion(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(PPOINTL)(c),0L,0x00004060L)
+Function GreRectInRegion(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(PRECTL)(c),0L,0x00004061L)
+Function GreCreateRectRegion(a,b,c) (HRGN) GreEntry5((HDC)(a),(PRECTL)(b),(LONG)(c),0L,0x00004062L)
+Function GreDestroyRegion(a,b) (BOOL) GreEntry4((HDC)(a),(HRGN)(b),0L,0x00004063L)
+Function GreSetRectRegion(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(HRGN)(b),(PRECTL)(c),(LONG)(d),0L,0x00004064L)
+Function GreCombineRegion(a,b,c,d,e) (int) GreEntry7((HDC)(a),(HRGN)(b),(HRGN)(c),(HRGN)(d),(ULONG)(e),0L,0x00004065L)
+Function GreCombineRectRegion(a,b,c,d,e) (int) GreEntry7((HDC)(a),(HRGN)(b),(PRECTL)(c),(HRGN)(d),(ULONG)(e),0L,0x00004066L)
+Function GreCombineShortLineRegion(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(PSHORTLINE)(c),0L,0x00004067L)
+Function GreEqualRegion(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(HRGN)(c),0L,0x00004068L)
+Function GrePaintRegion(a,b) (int) GreEntry4((HDC)(a),(HRGN)(b),0L,0x00004069L)
+Function GreSetRegionOwner(a,b,c) (BOOL) GreEntry5((HDC)(a),(HRGN)(b),(ULONG)(c),0L,0x0000406AL)
+Function GreGetClipBox(a,b) (int) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x0000406EL)
+Function GreGetClipRects(a,b,c,d) (int) GreEntry6((HDC)(a),(PRECTL)(b),(PRGNRECT)(c),(PRECTL)(d),0L,0x0000406FL)
+Function GreOffsetClipRegion(a,b) (int) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004070L)
+Function GrePtVisible(a,b) (int) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x00004071L)
+Function GreRectVisible(a,b) (int) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004072L)
+Function GreQueryClipRegion(a) (HRGN) GreEntry3((HDC)(a),0L,0x00004073L)
+Function GreSelectClipRegion(a,b,c) (int) GreEntry5((HDC)(a),(HRGN)(b),(PHRGN)(c),0L,0x00004074L)
+Function GreIntersectClipRectangle(a,b) (int) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004075L)
+Function GreExcludeClipRectangle(a,b) (int) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004076L)
+Function GreSetXformRect(a,b) (ULONG) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004077L)
+Function GreSaveRegion(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x0000407BL)
+Function GreRestoreRegion(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x0000407CL)
+Function GreClipPathCurves(a,b,c) (BOOL) GreEntry5((HDC)(a),(PPATH)(b),(PPIPELINEINFO)(c),0L,0x0000407DL)
+Function GreSelectPathRegion(a,b) (int) GreEntry4((HDC)(a),(HRGN)(b),0L,0x0000407EL)
+Function GreRegionSelectBitmap(a,b) (ULONG) GreEntry4((HDC)(a),(HBITMAP)(b),0L,0x0000407FL)
+Function GreCopyClipRegion(a,b,c,d) (int) GreEntry6((HDC)(a),(HRGN)(b),(PRECTL)(c),(ULONG)(d),0L,0x00004080L)
+Function GreSetupDC(a,b,c,d,e,f) (BOOL) GreEntry8((HDC)(a),(HRGN)(b),(LONG)(c),(LONG)(d),(PRECTL)(e),(ULONG)(f),0L,0x00004081L)
+Function GreGetPageUnits(a,b) (LONG) GreEntry4((HDC)(a),(PULONG)(b),0L,0x00004083L)
+Function GreSetPageUnits(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(LONG)(c),(LONG)(d),0L,0x00004084L)
+Function GreGetModelXform(a,b) (BOOL) GreEntry4((HDC)(a),(PXFORM)(b),0L,0x00004085L)
+Function GreSetModelXform(a,b,c) (BOOL) GreEntry5((HDC)(a),(PXFORM)(b),(ULONG)(c),0L,0x00004086L)
+Function GreGetWindowViewportXform(a,b) (BOOL) GreEntry4((HDC)(a),(PXFORM)(b),0L,0x00004087L)
+Function GreSetWindowViewportXform(a,b,c) (BOOL) GreEntry5((HDC)(a),(PXFORM)(b),(ULONG)(c),0L,0x00004088L)
+Function GreGetGlobalViewingXform(a,b) (BOOL) GreEntry4((HDC)(a),(PXFORM)(b),0L,0x00004089L)
+Function GreSetGlobalViewingXform(a,b,c) (BOOL) GreEntry5((HDC)(a),(PXFORM)(b),(ULONG)(c),0L,0x0000408AL)
+Function GreSaveXformData(a,b,c) (LONG) GreEntry5((HDC)(a),(LONG)(b),(PBYTE)(c),0L,0x0000408BL)
+Function GreRestoreXformData(a,b,c) (LONG) GreEntry5((HDC)(a),(LONG)(b),(PBYTE)(c),0L,0x0000408CL)
+Function GreGetPageViewport(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x0000408DL)
+Function GreSetPageViewport(a,b,c) (BOOL) GreEntry5((HDC)(a),(PRECTL)(b),(ULONG)(c),0L,0x0000408EL)
+Function GreGetGraphicsField(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004091L)
+Function GreSetGraphicsField(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004092L)
+Function GreGetViewingLimits(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004093L)
+Function GreSetViewingLimits(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004094L)
+Function GreQueryViewportSize(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(LONG)(c),(PVIEWPORTSIZE)(d),0L,0x00004095L)
+Function GreConvert(a,b,c,d,e) (BOOL) GreEntry7((HDC)(a),(LONG)(b),(LONG)(c),(PPOINTL)(d),(LONG)(e),0L,0x00004096L)
+Function GreConvertPath(a,b,c,d,e,f) (BOOL) GreEntry8((HDC)(a),(PPATH)(b),(LONG)(c),(LONG)(d),(PCURVE)(e),(LONG)(f),0L,0x00004097L)
+Function GreSaveXform(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x00004098L)
+Function GreRestoreXform(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x00004099L)
+Function GreMultiplyXforms(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(PXFORM)(b),(PXFORM)(c),(ULONG)(d),0L,0x0000409AL)
+Function GreConvertWithMatrix(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(PPOINTL)(b),(LONG)(c),(PXFORM)(d),0L,0x0000409BL)
+Function GreDeviceGetAttributes(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(PBUNDLE)(d),0L,0x0000409DL)
+Function GreDeviceSetAVIOFont2(a,b,c,d) (ULONG) GreEntry6((HDC)(a),(PFATTRS)(b),(PFOCAFONT)(c),(LCID)(d),0L,0x0000409EL)
+Function GreGetPairKerningTable(a,b,c) (ULONG) GreEntry5((HDC)(a),(LONG)(b),(PKERNINGPAIRS)(c),0L,0x000040A0L)
+Function GreDeviceSetAVIOFont(a,b,c) (ULONG) GreEntry5((HDC)(a),(PFOCAFONT)(b),(LCID)(c),0L,0x000040A1L)
+Function GreDeviceSetAttributes(a,b,c,d,e) (ULONG) GreEntry7((HDC)(a),(ULONG)(b),(ULONG)(c),(ULONG)(d),(PBUNDLE)(e),0L,0x000040A2L)
+Function GreDeviceSetGlobalAttribute(a,b,c,d) (ULONG) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(ULONG)(d),0L,0x000040A3L)
+Function GreNotifyClipChange(a,b,c,d) (ULONG) GreEntry6((HDC)(a),(PRECTL)(b),(LONG)(c),(ULONG)(d),0L,0x000040A4L)
+Function GreNotifyTransformChange(a,b,c) (BOOL) GreEntry5((HDC)(a),(ULONG)(b),(PNOTIFYTRANSFORMDATA)(c),0L,0x000040A5L)
+Function GreRealizeFont(a,b,c,d) (ULONG) GreEntry6((HDC)(a),(ULONG)(b),(PFATTRS)(c),(PFOCAFONT)(d),0L,0x000040A6L)
+Function GreErasePS(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040A7L)
+Function GreSetStyleRatio(a,b) (BOOL) GreEntry4((HDC)(a),(PBYTE)(b),0L,0x000040A8L)
+Function GreDeviceQueryFontAttributes(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PFONTMETRICS)(c),0L,0x000040A9L)
+Function GreDeviceQueryFonts(a,b,c,d,e,f) (LONG) GreEntry8((HDC)(a),(ULONG)(b),(PSZ)(c),(PFONTMETRICS)(d),(LONG)(e),(PLONG)(f),0L,0x000040AAL)
+Function GreDeviceInvalidateVisRegion(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PDC_BLOCK)(c),0L,0x000040ABL)
+Function GreGetPickWindow(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x000040ACL)
+Function GreSetPickWindow(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x000040ADL)
+Function GreResetBounds(a,b) (BOOL) GreEntry4((HDC)(a),(ULONG)(b),0L,0x000040AEL)
+Function GreGetBoundsData(a,b,c) (BOOL) GreEntry5((HDC)(a),(ULONG)(b),(PRECTL)(c),0L,0x000040AFL)
+Function GreAccumulateBounds(a,b) (ULONG) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x000040B0L)
+Function GreGetCodePage(a) (LONG) GreEntry3((HDC)(a),0L,0x000040B3L)
+Function GreSetCodePage(a,b) (BOOL) GreEntry4((HDC)(a),(ULONG)(b),0L,0x000040B4L)
+Function GreLockDevice(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040B5L)
+Function GreUnlockDevice(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040B6L)
+Function GreDeath(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040B7L)
+Function GreResurrection(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PBYTE)(c),0L,0x000040B8L)
+Function GreGetDCOrigin(a,b) (BOOL) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x000040BAL)
+Function GreDeviceSetDCOrigin(a,b) (BOOL) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x000040BBL)
+Function GreGetLineOrigin(a,b) (LONG) GreEntry4((HDC)(a),(PPOINTL)(b),0L,0x000040BCL)
+Function GreSetLineOrigin(a,b,c) (BOOL) GreEntry5((HDC)(a),(PPOINTL)(b),(LONG)(c),0L,0x000040BDL)
+Function GreGetStyleRatio(a,b) (BOOL) GreEntry4((HDC)(a),(PBYTE)(b),0L,0x000040BEL)
+Function GreQueryColorData(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PLONG)(c),0L,0x000040C3L)
+Function GreQueryLogColorTable(a,b,c,d,e) (LONG) GreEntry7((HDC)(a),(ULONG)(b),(LONG)(c),(LONG)(d),(PLONG)(e),0L,0x000040C4L)
+Function GreCreateLogColorTable(a,b,c,d,e,f) (BOOL) GreEntry8((HDC)(a),(ULONG)(b),(ULONG)(c),(LONG)(d),(LONG)(e),(PLONG)(f),0L,0x000040C5L)
+Function GreRealizeColorTable(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040C6L)
+Function GreUnrealizeColorTable(a) (BOOL) GreEntry3((HDC)(a),0L,0x000040C7L)
+Function GreQueryRealColors(a,b,c,d,e) (LONG) GreEntry7((HDC)(a),(ULONG)(b),(LONG)(c),(LONG)(d),(PLONG)(e),0L,0x000040C8L)
+Function GreQueryNearestColor(a,b,c) (LONG) GreEntry5((HDC)(a),(ULONG)(b),(COLOR)(c),0L,0x000040C9L)
+Function GreQueryColorIndex(a,b,c) (LONG) GreEntry5((HDC)(a),(ULONG)(b),(COLOR)(c),0L,0x000040CAL)
+Function GreQueryRGBColor(a,b,c) (LONG) GreEntry5((HDC)(a),(ULONG)(b),(COLOR)(c),0L,0x000040CBL)
+Function GreQueryDeviceBitmaps(a,b,c) (BOOL) GreEntry5((HDC)(a),(PBITMAPFORMAT)(b),(LONG)(c),0L,0x000040D0L)
+Function GreQueryDeviceCaps(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(LONG)(b),(PLONG)(c),(LONG)(d),0L,0x000040D1L)
+Function GreEscape(a,b,c,d,e,f) (LONG) GreEntry8((HDC)(a),(ULONG)(b),(LONG)(c),(PBYTE)(d),(PLONG)(e),(PBYTE)(f),0L,0x000040D2L)
+Function GreQueryHardcopyCaps(a,b,c,d) (LONG) GreEntry6((HDC)(a),(LONG)(b),(LONG)(c),(PHCINFO)(d),0L,0x000040D3L)
+Function GreQueryDevResource(a,b,c) (short) GreEntry5((HDC)(a),(ULONG)(b),(ULONG)(c),0L,0x000040D4L)
+Function GreOpenDC(a,b,c,d,e) (HDC) GreEntry7((HDC)(a),(ULONG)(b),(PSZ)(c),(LONG)(d),(PDEVOPENDATA)(e),0L,0x00000200L)
+Function GreCloseDC(a) (BOOL) GreEntry3((HDC)(a),0L,0x00004201L)
+Function GreResetDC(a,b) (ULONG) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004202L)
+Function GreGetHandle(a,b) (LONG) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004203L)
+Function GreSetHandle(a,b,c) (BOOL) GreEntry5((HDC)(a),(LHANDLE)(b),(ULONG)(c),0L,0x00004204L)
+Function GreGetProcessControl(a) (LONG) GreEntry3((HDC)(a),0L,0x00004205L)
+Function GreSetProcessControl(a,b,c) (BOOL) GreEntry5((HDC)(a),(ULONG)(b),(ULONG)(c),0L,0x00004206L)
+Function GreSaveDC(a) (LONG) GreEntry3((HDC)(a),0L,0x00004207L)
+Function GreRestoreDC(a,b) (BOOL) GreEntry4((HDC)(a),(LONG)(b),0L,0x00004208L)
+Function GreQueryDeviceNames(a,b,c,d,e,f) (BOOL) GreEntry8((PSZ)(a),(PLONG)(b),(PSTR32)(c),(PSTR64)(d),(PLONG)(e),(PSTR16)(f),0L,0x00000209L)
+Function GreQueryEngineVersion() (LONG) GreEntry2(0L,0x0000020AL)
+Function GreSetDCOwner(a,b) (BOOL) GreEntry4((HDC)(a),(ULONG)(b),0L,0x0000420BL)
+Function GreInvalidateVisRegion(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PDC_BLOCK)(c),0L,0x0000420FL)
+Function GreCreateBitmap(a,b,c,d,e) (HBITMAP) GreEntry7((HDC)(a),(PBITMAPINFOHEADER)(b),(ULONG)(c),(PBYTE)(d),(PBITMAPINFO)(e),0L,0x00004210L)
+Function GreDeleteBitmap(a) (BOOL) GreEntry3((HBITMAP)(a),0L,0x00000211L)
+Function GreSelectBitmap(a,b) (HBITMAP) GreEntry4((HDC)(a),(HBITMAP)(b),0L,0x00004212L)
+Function GreGetBitmapParameters(a,b) (BOOL) GreEntry4((HBITMAP)(a),(PBITMAPINFOHEADER)(b),0L,0x00000213L)
+Function GreGetBitmapDimension(a,b) (BOOL) GreEntry4((HBITMAP)(a),(PSIZEL)(b),0L,0x00000214L)
+Function GreSetBitmapDimension(a,b) (BOOL) GreEntry4((HBITMAP)(a),(PSIZEL)(b),0L,0x00000215L)
+Function GreSetCursor(a,b,c) (BOOL) GreEntry5((HDC)(a),(PPOINTL)(b),(HBITMAP)(c),0L,0x00004216L)
+Function GreGetAttributes(a,b,c,d) (LONG) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(PBUNDLE)(d),0L,0x00004217L)
+Function GreSetAttributes(a,b,c,d,e) (BOOL) GreEntry7((HDC)(a),(ULONG)(b),(ULONG)(c),(ULONG)(d),(PBUNDLE)(e),0L,0x00004218L)
+Function GreSetGlobalAttribute(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(ULONG)(d),0L,0x00004219L)
+Function GreSetBitmapOwner(a,b) (BOOL) GreEntry4((HBITMAP)(a),(ULONG)(b),0L,0x0000021AL)
+Function GreGetDefaultAttributes(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(PBUNDLE)(d),0L,0x0000421BL)
+Function GreSetDefaultAttributes(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(ULONG)(b),(ULONG)(c),(PBUNDLE)(d),0L,0x0000421CL)
+Function GreGetDefaultArcParameters(a,b) (BOOL) GreEntry4((HDC)(a),(PARCPARAMS)(b),0L,0x0000421DL)
+Function GreSetDefaultArcParameters(a,b) (BOOL) GreEntry4((HDC)(a),(PARCPARAMS)(b),0L,0x0000421EL)
+Function GreGetDefaultViewingLimits(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x0000421FL)
+Function GreSetDefaultViewingLimits(a,b) (BOOL) GreEntry4((HDC)(a),(PRECTL)(b),0L,0x00004220L)
+Function GreInitializeAttributes(a,b) (BOOL) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004221L)
+Function GreDeleteSetId(a,b) (BOOL) GreEntry4((HDC)(a),(LCID)(b),0L,0x00004222L)
+Function GreQueryNumberSetIds(a,b) (LONG) GreEntry4((HDC)(a),(ULONG)(b),0L,0x00004223L)
+Function GreQuerySetIds(a,b,c,d,e,f) (BOOL) GreEntry8((HDC)(a),(LONG)(b),(PLONG)(c),(PSTR8)(d),(PLCID)(e),(ULONG)(f),0L,0x00004224L)
+Function GreQueryBitmapHandle(a,b) (HBITMAP) GreEntry4((HDC)(a),(LCID)(b),0L,0x00004225L)
+Function GreSetBitmapID(a,b,c) (BOOL) GreEntry5((HDC)(a),(HBITMAP)(b),(LCID)(c),0L,0x00004226L)
+Function GreCopyDCLoadData(a,b,c) (BOOL) GreEntry5((HDC)(a),(ULONG)(b),(HDC)(c),0L,0x00004227L)
+Function GreQueryLogicalFont(a,b,c,d,e) (BOOL) GreEntry7((HDC)(a),(LCID)(b),(PSTR8)(c),(PFATTRS)(d),(LONG)(e),0L,0x0000422CL)
+Function GreCreateLogicalFont(a,b,c,d) (BOOL) GreEntry6((HDC)(a),(LCID)(b),(PSTR8)(c),(PFATTRS)(d),0L,0x0000422DL)
+Function GreLoadFont(a) (BOOL) GreEntry3((PSZ)(a),0L,0x0000022EL)
+Function GreUnloadFont(a) (BOOL) GreEntry3((PSZ)(a),0L,0x0000022FL)
+Function GreQueryFonts(a,b,c,d,e,f) (LONG) GreEntry8((HDC)(a),(ULONG)(b),(PSZ)(c),(PFONTMETRICS)(d),(LONG)(e),(PLONG)(f),0L,0x00004230L)
+Function GreQueryFontAttributes(a,b,c) (BOOL) GreEntry5((HDC)(a),(LONG)(b),(PFONTMETRICS)(c),0L,0x00004231L)
+Function GreInstallIFI(a,b,c,d) (LONG) GreEntry6((ULONG)(a),(PSZ)(b),(PSZ)(c),(PSZ)(d),0L,0x00000232L)
+Function GreLoadPublicFont(a) (BOOL) GreEntry3((PSZ)(a),0L,0x00000233L)
+Function GreUnLoadPublicFont(a) (BOOL) GreEntry3((PSZ)(a),0L,0x00000234L)
+Function GreQueryCodePageVector(a) (ULONG) GreEntry3((ULONG)(a),0L,0x00000235L)
+Function GreQueryFontFileDescriptions(a,b,c) (ULONG) GreEntry5((PSZ)(a),(PLONG)(b),(PFFDESCS)(c),0L,0x00000236L)
+Function GreAccumulateJournalFile(a) (ULONG) GreEntry3((ULONG)(a),0L,0x00000239L)
+Function GreCreateJournalFile(a,b,c) (ULONG) GreEntry5((PSZ)(a),(ULONG)(b),(LONG)(c),0L,0x0000023AL)
+Function GreDeleteJournalFile(a) (ULONG) GreEntry3((LHANDLE)(a),0L,0x0000023BL)
+Function GreStartJournalFile(a,b) (ULONG) GreEntry4((HDC)(a),(LHANDLE)(b),0L,0x0000023CL)
+Function GreStopJournalFile(a,b) (ULONG) GreEntry4((HDC)(a),(LHANDLE)(b),0L,0x0000023DL)
+Function GrePlayJournalFile(a,b) (ULONG) GreEntry4((HDC)(a),(LHANDLE)(b),0L,0x0000023EL)
+Function GreOpenJournalFile(a,b,c) (ULONG) GreEntry5((PSZ)(a),(ULONG)(b),(LONG)(c),0L,0x0000023FL)
+
+Implementation
+  Function GreEntry10;                    External 'PMGRE'    Index   20;
+  Function GreEntry2;                     External 'PMGRE'    Index   12;
+  Function GreEntry3;                     External 'PMGRE'    Index   13;
+  Function GreEntry4;                     External 'PMGRE'    Index   14;
+  Function GreEntry5;                     External 'PMGRE'    Index   15;
+  Function GreEntry6;                     External 'PMGRE'    Index   16;
+  Function GreEntry7;                     External 'PMGRE'    Index   17;
+  Function GreEntry8;                     External 'PMGRE'    Index   18;
+  Function GreEntry9;                     External 'PMGRE'    Index   19;
+End.

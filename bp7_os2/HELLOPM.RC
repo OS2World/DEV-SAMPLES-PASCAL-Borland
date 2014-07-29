@@ -1,0 +1,13 @@
+MENU  1
+BEGIN
+  SUBMENU "~File",100
+  BEGIN
+    MENUITEM "~Beep",101
+    MENUITEM "E~xit",109
+  END
+
+  SUBMENU "~Help",200
+  BEGIN
+    MENUITEM "~About...",201
+  END
+END

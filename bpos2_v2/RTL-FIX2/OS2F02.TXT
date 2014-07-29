@@ -1,0 +1,60 @@
+
+BP4OS2  OS2F02.TXT
+
+The Second Fix Archive for the BP4OS2 Project.
+
+CONTENCE
+             OS2F02.TXT    :   This File
+             WPAR.ASM      :   Assemble Language file containing
+                                1. Function ParamStr( I : integer):string;
+                                2. Function ParamCount:Integer;
+                               Source code.
+
+These Patches must be applied on top of the OS2F01.zip (30 NOV 1993).
+
+There are 3 separate Bug Fixes in this Archive.
+
+**********************    F I X  # 1  ************************************
+
+The following fixes I were routed from germany:
+
+by Jasper Neumann 2:242/2
+=========================
+
+crt.pas Line 199 (sometimes wierd colors):
+  vioscrollup(0,0,24,79,1,cell,0);
+                        ~ instead of 25
+
+**********************    F I X   # 2 ************************************
+
+fctl.asm Line 139 (Rewrite didn't overwrite an existing file):
+    MOV     AX,FILE_CREATE OR FILE_TRUNCATE; Read flags for new file
+instead of                    ~~~~~~~~~~~~~
+    MOV     AX,FILE_CREATE OR FILE_OPEN;  read flags for new file
+
+**********************    F I X   # 3   **********************************
+Problem Report:
+;  Command line parameter with mutliple spaces between them were ignored.
+;
+;  Program test.pas;
+;  begin writeln(paramcount) end.
+;
+;  c>TEST 1 2  3 4 5
+;            ~~ Doublespace
+;  2
+;  c>
+;    returns 2 instead of 5.
+
+Solution:
+   Replace   WPAR.ASM with the one in this Archive.
+
+NOTE:  the WPAR.ASM in this Archive ADD 2 additional Features to
+       ParamStr:
+
+       ParamStr(-1) : returns Complete CMDLINE as typed in by User.
+                      With a #0 between Program Name and Parameter list.
+       ParamStr(-2) : Returns Only the Parameter List as typed in by User.
+
+           Also,  If the CMDLINE or Parameter List is > 255 char long, then
+           the result is truncated to 255 chars.
+

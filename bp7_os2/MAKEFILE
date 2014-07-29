@@ -1,0 +1,42 @@
+# //////////////////////////////////////////////////////
+# /                                                    /
+# / Run-time Library fÅr Borland Pascal 7.0 unter OS/2 /
+# / Makefile.                                          /
+# /                                                    /
+# / 1993 Matthias Withopf / c't                        /
+# / Originalversion (c) 1988,92 Borland International  /
+# /                                                    /
+# //////////////////////////////////////////////////////
+
+BP   = \OS2
+RTL  = $(BP)\os2rtl
+LIB  = $(RTL)\lib
+INC  = $(RTL)\inc
+BIN  = $(RTL)\bin
+TASM = tasm -t -w- -z
+BPC  = bpc -$d-,l-
+BPCW = $(BPC) -t -cw -e$(TPW) -q -$g-
+
+.asm.obj:
+ $(TASM) -e -i$(INC) $*,$*.obj
+
+.asm.obw:
+ $(TASM) -e -i$(INC) -d_Windows_ $*,$*.obw
+
+all:     $(TPW)\os2.tpl
+
+$(TPW)\os2.tpl: sys\system.tps sys\system.pas \
+sys\wapp.obw sys\wlib.obw sys\wend.obw sys\errc.obw sys\varh.obj \
+sys\long.obj sys\wmem.obw sys\strh.obj sys\seth.obj sys\fp48.obj \
+sys\f48h.obj sys\f48f.obj sys\rand.obj sys\dint.obj \
+sys\df48.obj sys\df87.obw sys\sint.obj sys\sf48.obj sys\sf87.obj \
+sys\tctl.obw sys\tgpc.obw sys\tchr.obw sys\tstr.obw sys\tbol.obw \
+sys\tint.obw sys\tf48.obw sys\tf87.obw sys\tfun.obw sys\fctl.obw \
+sys\ffun.obj sys\fdir.obw sys\memh.obj sys\wpar.obw sys\dirh.obw \
+sys\char.obj sys\we87.obw sys\objh.obw sys\dmth.obj sys\tpch.obw \
+sys\cint.obw sys\cf48.obw sys\cf87.obw sys\lovf.obj \
+sys\wi87.obw $(LIB)\wf87.obj
+ cd sys
+ $(BPCW) -o$(LIB) system
+ copy system.tpw ..\OS2.TPL
+ cd ..

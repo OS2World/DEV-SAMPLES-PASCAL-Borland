@@ -1,0 +1,32 @@
+Program Os2All;
+Uses
+  Os2Def,
+  PmWin,
+  PmGpi,
+  PmBitmap,
+  PmDDi,
+  BseDos,
+  BseErr,
+  BseSub,
+  PmAvio,
+  SubCalls,
+  PmMle,
+  PmShl,
+  PmTypes,
+  PmStdDlg,
+  Error,
+  Error2,
+  PmErr,
+  PmFont,
+  PmHelp,
+  PmDev,
+  PmPic,
+  PmSei,
+  PmOrd,
+  PmSpl,
+  HmTailor,
+  IsPError,
+  IsPUser,
+  IsPCast;
+Begin
+End.
